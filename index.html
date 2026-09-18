@@ -25,6 +25,10 @@ h1 em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:
 .sect{font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
   color:var(--slate);margin:0 0 18px}
 
+/* Ocultar elementos dinámicos al cargar para evitar parpadeos */
+.cargando-datos { opacity: 0; transition: opacity 0.3s ease-in; }
+.datos-listos { opacity: 1; }
+
 /* Héroe */
 .hero{background:var(--marca);color:#fff;border-radius:16px;padding:28px 26px;margin-bottom:14px}
 .hero .sect{color:#D5CCEA}
@@ -32,7 +36,7 @@ h1 em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:
 .ring{position:relative;width:132px;height:132px;flex:none}
 .ring svg{transform:rotate(-90deg)}
 .ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:26px;font-weight:700;letter-spacing:-.5px}
+  font-size:22px;font-weight:700;letter-spacing:-.5px}
 .herometa{flex:1;min-width:220px}
 .estado{display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;
   color:#B3312F;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700}
@@ -42,7 +46,7 @@ h1 em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:
 /* Roles */
 .roles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .role{text-align:center;padding:16px 8px;border-radius:12px;background:var(--tint)}
-.role .n{font-size:26px;font-weight:700;letter-spacing:-.8px;margin-bottom:3px}
+.role .n{font-size:22px;font-weight:700;letter-spacing:-.8px;margin-bottom:3px}
 .role .l{font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--slate)}
 .role .mini{height:4px;border-radius:999px;background:var(--track);margin:10px 14px 0;overflow:hidden}
 .role .mini i{display:block;height:100%;border-radius:999px;background:var(--marca)}
@@ -77,8 +81,7 @@ td:first-child{text-align:left;font-weight:700;font-size:13px}
   color:var(--slate);margin:0 0 6px}
 /* Resumen */
 .resumen{background:var(--card);border-radius:16px;padding:22px 26px;
-  box-shadow:0 1px 3px rgba(26,29,46,.06);margin-bottom:14px;
-  border-left:none}
+  box-shadow:0 1px 3px rgba(26,29,46,.06);margin-bottom:14px;border-left:none}
 .resumen p{margin:0 0 11px;font-size:14px;line-height:1.65;color:var(--texto)}
 .resumen p:last-child{margin-bottom:0}
 .resumen strong{font-weight:700}
@@ -158,7 +161,7 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
         <circle cx="66" cy="66" r="56" fill="none" stroke="#E24B4A" stroke-width="13"
                 stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="315.7"/>
       </svg>
-      <div class="val">10,29 %</div>
+      <div class="val cargando-datos" id="txt-avance">...</div>
     </div>
     <div class="herometa">
       <span class="estado"><i class="dot" style="background:#E24B4A"></i>Zona roja · 0–49 %</span>
@@ -179,14 +182,14 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
 <div class="card">
   <p class="sect">Avance por rol</p>
   <div class="roles">
-    <div class="role"><div class="n">13,72 %</div><div class="l">IT</div>
-      <div class="mini"><i style="width:13.72%"></i></div></div>
-    <div class="role"><div class="n">27,44 %</div><div class="l">DC</div>
-      <div class="mini"><i style="width:27.44%"></i></div></div>
-    <div class="role"><div class="n zero">0,00 %</div><div class="l">QA</div>
-      <div class="mini"><i style="width:0"></i></div></div>
-    <div class="role"><div class="n zero">0,00 %</div><div class="l">MI</div>
-      <div class="mini"><i style="width:0"></i></div></div>
+    <div class="role"><div class="n cargando-datos" id="rol-it">...</div><div class="l">IT</div>
+      <div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos" id="rol-dc">...</div><div class="l">DC</div>
+      <div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos" id="rol-qa">...</div><div class="l">QA</div>
+      <div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos" id="rol-mi">...</div><div class="l">MI</div>
+      <div class="mini"><i style="width:0%"></i></div></div>
   </div>
 </div>
 
@@ -198,28 +201,28 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
     <tbody>
       <tr>
         <td>Web</td>
-        <td><span class="pct">41,15 %</span><div class="track"><i style="width:41.15%"></i></div></td>
-        <td><span class="pct">82,31 %<sup class="m">1</sup></span><div class="track"><i style="width:82.31%"></i></div></td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
       </tr>
       <tr>
         <td>APP</td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
         <td><span class="na">N/A</span></td>
       </tr>
       <tr>
         <td>Offline</td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
-        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
+        <td><span class="pct cargando-datos">...</span><div class="track"><i style="width:0%"></i></div></td>
         <td><span class="na">N/A</span></td>
       </tr>
     </tbody>
   </table>
-  <p class="fnote"><b>1.</b> El 17,69 % restante de Web · DC no son elementos sin revisar: corresponden a las actividades que el migrador configura de forma manual, por lo que quedan pendientes hasta que esa configuración se ejecute.</p>
+  <p class="fnote"><b>1.</b> El porcentaje restante no revisado corresponde a configuraciones manuales pendientes.</p>
 </div>
 
 <!-- SEMÁFORO -->
@@ -231,68 +234,6 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
     <span><i class="dot" style="background:var(--naran)"></i>75–99 %</span>
     <span><i class="dot" style="background:var(--verde)"></i>100 %</span>
   </div>
-</div>
-
-<div class="card">
-  <p class="sect">Cronograma · septiembre</p>
-  <div class="gtabs" role="tablist">
-    <button class="gtab on" data-v="Web" role="tab">Web<span class="tct">9</span></button>
-    <button class="gtab" data-v="App" role="tab">App<i class="tdot"></i><span class="tct">7</span></button>
-    <button class="gtab" data-v="Offline" role="tab">Offline<i class="tdot"></i><span class="tct">7</span></button>
-  </div>
-  <div class="gleg"><span><i class="sw fin"></i>Finalizado</span><span><i class="sw proc"></i>En proceso</span><span><i class="sw pend"></i>Pendiente</span><span><i class="sw late"></i>Fuera de fecha</span><span><i class="sw todaysw"></i>Hoy · 18 sep</span></div>
-  <div class="gpanel on" data-v="Web">
-    <p class="gcorte">Corte 24 sep</p>
-    <div class="gscroll"><div class="gantt">
-      <div class="grow ghead"><div class="glabel"></div><div class="gtrack"><span class="gd">3</span><span class="gd">4</span><span class="gd we">5</span><span class="gd we">6</span><span class="gd">7</span><span class="gd">8</span><span class="gd">9</span><span class="gd">10</span><span class="gd">11</span><span class="gd we">12</span><span class="gd we">13</span><span class="gd">14</span><span class="gd">15</span><span class="gd">16</span><span class="gd">17</span><span class="gd td">18</span><span class="gd we">19</span><span class="gd we">20</span><span class="gd">21</span><span class="gd">22</span><span class="gd">23</span><span class="gd">24</span><span class="gd">25</span><span class="gd we">26</span><span class="gd we">27</span><span class="gd">28</span><span class="gd">29</span><span class="gd">30</span></div></div>
-      <div class="grow"><div class="glabel"><b>Entrega de curso migrado</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:8 / span 1">100 %</div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>DC · Aarón Flores</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:9 / span 3">100 %</div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>QA · Polett Jácome</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar proc" style="grid-column:9 / span 5">50 %</div></div></div>
-      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:12 / span 4">100 %</div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 1</b><small>DC · Aarón</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:16 / span 1">100 %</div></div></div>
-      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:19 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 2</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:20 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Configuraciones manuales</b><small>MI · Martín</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:21 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de config. manuales</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:22 / span 1"></div></div></div>
-    </div></div>
-  </div>
-  <div class="gpanel" data-v="App">
-    <p class="gcorte">Corte 30 sep</p>
-    <div class="gscroll"><div class="gantt">
-      <div class="grow ghead"><div class="glabel"></div><div class="gtrack"><span class="gd">3</span><span class="gd">4</span><span class="gd we">5</span><span class="gd we">6</span><span class="gd">7</span><span class="gd">8</span><span class="gd">9</span><span class="gd">10</span><span class="gd">11</span><span class="gd we">12</span><span class="gd we">13</span><span class="gd">14</span><span class="gd">15</span><span class="gd">16</span><span class="gd">17</span><span class="gd td">18</span><span class="gd we">19</span><span class="gd we">20</span><span class="gd">21</span><span class="gd">22</span><span class="gd">23</span><span class="gd">24</span><span class="gd">25</span><span class="gd we">26</span><span class="gd we">27</span><span class="gd">28</span><span class="gd">29</span><span class="gd">30</span></div></div>
-      <div class="grow"><div class="glabel"><b>Entrega de curso versión App</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar late" style="grid-column:1 / span 14"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>DC · Aarón Flores</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>QA · Polett Jácome</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:21 / span 2"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 1</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:23 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:26 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 2</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:27 / span 1"></div></div></div>
-    </div></div>
-  </div>
-  <div class="gpanel" data-v="Offline">
-    <p class="gcorte">Corte 30 sep</p>
-    <div class="gscroll"><div class="gantt">
-      <div class="grow ghead"><div class="glabel"></div><div class="gtrack"><span class="gd">3</span><span class="gd">4</span><span class="gd we">5</span><span class="gd we">6</span><span class="gd">7</span><span class="gd">8</span><span class="gd">9</span><span class="gd">10</span><span class="gd">11</span><span class="gd we">12</span><span class="gd we">13</span><span class="gd">14</span><span class="gd">15</span><span class="gd">16</span><span class="gd">17</span><span class="gd td">18</span><span class="gd we">19</span><span class="gd we">20</span><span class="gd">21</span><span class="gd">22</span><span class="gd">23</span><span class="gd">24</span><span class="gd">25</span><span class="gd we">26</span><span class="gd we">27</span><span class="gd">28</span><span class="gd">29</span><span class="gd">30</span></div></div>
-      <div class="grow"><div class="glabel"><b>Migración</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar late" style="grid-column:1 / span 14"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación</b><small>DC · Aarón Flores</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación</b><small>QA · Polett Jácome</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:21 / span 2"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 1</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:23 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:26 / span 1"></div></div></div>
-      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 2</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:27 / span 1"></div></div></div>
-    </div></div>
-  </div>
-  <p class="gnote">Las barras marcan inicio y fin planificados. La entrega de App y la migración Offline vencieron el 16 de septiembre y siguen en 0 %; todo lo que sigue en esas dos versiones depende de ellas.</p>
-  <script>
-  (function(){
-    var tabs=document.querySelectorAll('.gtab'), panels=document.querySelectorAll('.gpanel');
-    tabs.forEach(function(t){ t.addEventListener('click', function(){
-      tabs.forEach(function(x){x.classList.remove('on')});
-      panels.forEach(function(p){p.classList.toggle('on', p.dataset.v===t.dataset.v)});
-      t.classList.add('on');
-    });});
-  })();
-  </script>
 </div>
 
 <!-- RIESGOS -->
@@ -334,50 +275,48 @@ async function sincronizarDashboardCompleto() {
         let respuesta = await fetch(urlApp);
         let datos = await respuesta.json();
         
-        console.log("Datos sincronizados desde Google Sheets:", datos);
+        console.log("Datos sincronizados:", datos);
         
-        // 1. Actualizar Avance General (Círculo - Celda D8)
+        // 1. Avance General
         const valElement = document.querySelector('.hero .val');
         if(valElement && datos.avanceGeneral) {
             valElement.innerText = datos.avanceGeneral;
+            valElement.classList.remove('cargando-datos');
+            valElement.classList.add('datos-listos');
         }
         
-        // 2. Actualizar Roles (IT, DC, QA, MI - Fila 13)
+        // 2. Roles
         if(datos.roles) {
             const rolesCards = document.querySelectorAll('.roles .role');
             if(rolesCards.length >= 4) {
-                if(datos.roles.it) {
-                    rolesCards[0].querySelector('.n').innerText = datos.roles.it;
-                    rolesCards[0].querySelector('.mini i').style.width = datos.roles.it;
-                }
-                if(datos.roles.dc) {
-                    rolesCards[1].querySelector('.n').innerText = datos.roles.dc;
-                    rolesCards[1].querySelector('.mini i').style.width = datos.roles.dc;
-                }
-                if(datos.roles.qa) {
-                    rolesCards[2].querySelector('.n').innerText = datos.roles.qa;
-                    rolesCards[2].querySelector('.mini i').style.width = datos.roles.qa;
-                }
-                if(datos.roles.mi) {
-                    rolesCards[3].querySelector('.n').innerText = datos.roles.mi;
-                    rolesCards[3].querySelector('.mini i').style.width = datos.roles.mi;
-                }
+                const mapRoles = [datos.roles.it, datos.roles.dc, datos.roles.qa, datos.roles.mi];
+                rolesCards.forEach((rcard, idx) => {
+                    const valNum = mapRoles[idx];
+                    const numDiv = rcard.querySelector('.n');
+                    const miniBar = rcard.querySelector('.mini i');
+                    if(valNum) {
+                        numDiv.innerText = valNum;
+                        miniBar.style.width = valNum;
+                        numDiv.classList.remove('cargando-datos');
+                        numDiv.classList.add('datos-listos');
+                    }
+                });
             }
         }
 
-        // 3. Actualizar la Tabla de Versiones (Filas 19, 20 y 21)
+        // 3. Versiones
         if(datos.versiones && Array.isArray(datos.versiones)) {
             const filasTabla = document.querySelectorAll('table tbody tr');
-            
             datos.versiones.forEach((filaDatos, index) => {
                 if(filasTabla[index]) {
                     const celdas = filasTabla[index].querySelectorAll('td');
-                    // Empezamos desde i = 1 porque la columna 0 es el nombre de la versión
                     for(let i = 1; i < celdas.length; i++) {
                         if(filaDatos[i] !== undefined && celdas[i].querySelector('.pct')) {
-                            celdas[i].querySelector('.pct').innerText = filaDatos[i];
+                            const pctSpan = celdas[i].querySelector('.pct');
+                            pctSpan.innerText = filaDatos[i];
+                            pctSpan.classList.remove('cargando-datos');
+                            pctSpan.classList.add('datos-listos');
                             
-                            // Ajustar la barra de progreso interna si existe
                             const barraProgreso = celdas[i].querySelector('.track i');
                             if(barraProgreso) {
                                 barraProgreso.style.width = filaDatos[i];
@@ -389,11 +328,10 @@ async function sincronizarDashboardCompleto() {
         }
 
     } catch (error) {
-        console.error("Error al sincronizar el dashboard:", error);
+        console.error("Error al sincronizar:", error);
     }
 }
 
-// Ejecutar automáticamente al cargar la página
 document.addEventListener('DOMContentLoaded', sincronizarDashboardCompleto);
 </script>
 
