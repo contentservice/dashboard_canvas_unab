@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard de seguimiento</title>
+<style>
+:root{
+  --marca:#503B96; --acento:#F8B716; --navy:#1A1D2E;
+  --slate:#5B607A; --gris:#B5B7CC; --borde:#E4E4EA;
+  --tint:#F4F0F8; --lienzo:#FAFAF7; --card:#FFFFFF; --texto:#1A1D2E;
+  --rojo:#E24B4A; --amar:#F2C230; --naran:#E8883A; --verde:#1D9E75;
+  --track:#E4E4EA;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--lienzo);color:var(--texto);
+  font-family:Arial,Helvetica,sans-serif;padding:28px 18px 46px}
+.wrap{max-width:900px;margin:0 auto}
+header{margin-bottom:20px}
+h1{font-size:26px;margin:0;font-weight:700;letter-spacing:-.4px}
+h1 em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400}
+.sub{color:var(--slate);font-size:13px;margin-top:6px}
+.card{background:var(--card);border-radius:16px;padding:22px 26px;
+  box-shadow:0 1px 3px rgba(26,29,46,.06);margin-bottom:14px}
+.sect{font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
+  color:var(--slate);margin:0 0 18px}
+
+/* Héroe */
+.hero{background:var(--marca);color:#fff;border-radius:16px;padding:28px 26px;margin-bottom:14px}
+.hero .sect{color:#D5CCEA}
+.heroflex{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.ring{position:relative;width:132px;height:132px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:700;letter-spacing:-.5px}
+.herometa{flex:1;min-width:220px}
+.estado{display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;
+  color:#B3312F;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.herometa p{color:#E6E0F2;font-size:13px;line-height:1.55;margin:14px 0 0;max-width:38ch}
+
+/* Roles */
+.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.role{text-align:center;padding:16px 8px;border-radius:12px;background:var(--tint)}
+.role .n{font-size:26px;font-weight:700;letter-spacing:-.8px;margin-bottom:3px}
+.role .l{font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--slate)}
+.role .mini{height:4px;border-radius:999px;background:var(--track);margin:10px 14px 0;overflow:hidden}
+.role .mini i{display:block;height:100%;border-radius:999px;background:var(--marca)}
+
+/* Tabla versión */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);
+  font-weight:700;padding:0 8px 12px;text-align:center}
+th:first-child{text-align:left}
+td{padding:14px 8px;text-align:center;border-top:1px solid var(--borde)}
+td:first-child{text-align:left;font-weight:700;font-size:13px}
+.pct{display:block;font-weight:700;font-size:15px;letter-spacing:-.3px}
+.track{height:5px;border-radius:999px;background:var(--track);margin:8px auto 0;
+  max-width:88px;overflow:hidden}
+.track i{display:block;height:100%;border-radius:999px;background:var(--marca)}
+.na{color:var(--gris);font-size:12px;font-weight:700}
+.zero{color:var(--slate)}
+
+/* Semáforo */
+.sem{display:flex;gap:10px;flex-wrap:wrap}
+.sem span{display:inline-flex;align-items:center;gap:8px;background:var(--tint);
+  border-radius:999px;padding:8px 16px;font-size:12px;font-weight:700;color:var(--texto)}
+
+/* Riesgos */
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.rrow{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:14px}
+.rrow .lab{flex:1;display:flex;align-items:center;gap:9px;color:var(--texto)}
+.rrow .num{font-size:18px;font-weight:700;min-width:26px;text-align:right}
+.rbar{height:5px;border-radius:999px;background:var(--track);width:72px;overflow:hidden}
+.rbar i{display:block;height:100%;border-radius:999px}
+.rtit{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--slate);margin:0 0 6px}
+/* Resumen */
+.resumen{background:var(--card);border-radius:16px;padding:22px 26px;
+  box-shadow:0 1px 3px rgba(26,29,46,.06);margin-bottom:14px;
+  border-left:none}
+.resumen p{margin:0 0 11px;font-size:14px;line-height:1.65;color:var(--texto)}
+.resumen p:last-child{margin-bottom:0}
+.resumen strong{font-weight:700}
+.alerta{color:var(--rojo);font-weight:700}
+
+/* Gantt */
+.gscroll{overflow-x:auto;padding-bottom:6px}
+.gantt{min-width:760px}
+.gleg{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px;font-size:12px;color:var(--slate)}
+.gleg span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+.sw.fin{background:var(--verde)} .sw.proc{background:var(--acento)}
+.sw.pend{background:var(--marca);opacity:.32} .sw.late{background:var(--rojo)}
+.sw.todaysw{background:transparent;border-left:2px solid var(--marca);border-radius:0;width:2px}
+.grow{display:grid;grid-template-columns:210px 1fr;align-items:center;gap:14px;padding:3px 0}
+.glabel b{display:block;font-size:12.5px;font-weight:700;line-height:1.3}
+.glabel small{display:block;font-size:11px;color:var(--slate);margin-top:2px}
+.gtrack{display:grid;grid-template-columns:repeat(28,1fr);position:relative;height:24px}
+.gcell{border-right:1px solid var(--borde)}
+.gcell.we{background:var(--tint)}
+.gcell.td{box-shadow:inset 2px 0 0 var(--marca)}
+.ghead .gtrack{height:20px}
+.gd{font-size:10px;color:var(--slate);text-align:center;line-height:20px}
+.gd.we{background:var(--tint);border-radius:4px}
+.gd.td{color:var(--marca);font-weight:700}
+.gbar{grid-row:1;height:17px;align-self:center;border-radius:999px;font-size:10px;
+  font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;
+  margin:0 1px;z-index:1}
+.gbar.fin{background:var(--verde)} .gbar.proc{background:var(--acento);color:#5A4300}
+.gbar.pend{background:var(--marca);opacity:.32} .gbar.late{background:var(--rojo)}
+.gsep{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--slate);margin:16px 0 6px;padding-top:12px;border-top:1px solid var(--borde)}
+.grow.ghead+.gsep{border-top:0;margin-top:8px;padding-top:0}
+
+.gtabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.gtab{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borde);
+  background:var(--card);color:var(--slate);border-radius:999px;padding:9px 16px;
+  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+.gtab:hover{background:var(--tint)}
+.gtab.on{background:var(--marca);border-color:var(--marca);color:#fff}
+.tct{font-size:11px;font-weight:700;background:var(--tint);color:var(--slate);
+  border-radius:999px;padding:2px 7px}
+.gtab.on .tct{background:rgba(255,255,255,.22);color:#fff}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--rojo);display:inline-block}
+.gpanel{display:none}
+.gpanel.on{display:block}
+.gcorte{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  color:var(--slate);margin:0 0 12px}
+.gnote{font-size:12px;color:var(--slate);margin:18px 0 0;line-height:1.55}
+.fnote{font-size:12px;color:var(--slate);line-height:1.6;margin:16px 0 0;
+  background:var(--tint);border-radius:10px;padding:12px 14px}
+.fnote b{color:var(--texto)}
+sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
+.foot{font-size:12px;color:var(--slate);text-align:center;margin-top:20px}
+@media(max-width:700px){
+  .roles{grid-template-columns:repeat(2,1fr)}
+  .rgrid{grid-template-columns:1fr;gap:18px}
+  table{font-size:13px} th,td{padding-left:4px;padding-right:4px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Dashboard de <em>seguimiento</em></h1>
+  <div class="sub">Migración a Canvas · Universidad Andrés Bello · 18 de septiembre de 2026</div>
+</header>
+
+<!-- AVANCE GENERAL -->
+<div class="hero">
+  <p class="sect">Avance general</p>
+  <div class="heroflex">
+    <div class="ring">
+      <svg width="132" height="132" viewBox="0 0 132 132">
+        <circle cx="66" cy="66" r="56" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="13"/>
+        <circle cx="66" cy="66" r="56" fill="none" stroke="#E24B4A" stroke-width="13"
+                stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="315.7"/>
+      </svg>
+      <div class="val">10,29 %</div>
+    </div>
+    <div class="herometa">
+      <span class="estado"><i class="dot" style="background:#E24B4A"></i>Zona roja · 0–49 %</span>
+      <p>Promedio de las cuatro compuertas. DC avanza sobre la versión Web; QA y MI todavía no arrancaron.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RESUMEN -->
+<div class="resumen">
+  <p class="sect">Resumen del día</p>
+  <p>El proyecto avanza <strong>solo en la versión Web</strong>. La validación de contenidos llega al 82,31 % y es lo único que se movió; App y Offline siguen en cero en las cuatro compuertas. El 10,29 % general refleja ese desbalance, no una falta de trabajo.</p>
+  <p><span class="alerta">Dos actividades están fuera de fecha</span> desde el 16 de septiembre: la entrega del curso versión App y la migración Offline, ambas a cargo de Julián y sin avance registrado. Son el bloqueo que impide arrancar las validaciones de esas dos versiones.</p>
+  <p>El corte de Web es el <strong>24 de septiembre</strong> y QA todavía no registra ningún elemento validado. De las 23 actividades del cronograma, 16 siguen pendientes y 3 están en riesgo alto.</p>
+</div>
+
+<!-- POR ROL -->
+<div class="card">
+  <p class="sect">Avance por rol</p>
+  <div class="roles">
+    <div class="role"><div class="n">13,72 %</div><div class="l">IT</div>
+      <div class="mini"><i style="width:13.72%"></i></div></div>
+    <div class="role"><div class="n">27,44 %</div><div class="l">DC</div>
+      <div class="mini"><i style="width:27.44%"></i></div></div>
+    <div class="role"><div class="n zero">0,00 %</div><div class="l">QA</div>
+      <div class="mini"><i style="width:0"></i></div></div>
+    <div class="role"><div class="n zero">0,00 %</div><div class="l">MI</div>
+      <div class="mini"><i style="width:0"></i></div></div>
+  </div>
+</div>
+
+<!-- POR VERSIÓN -->
+<div class="card">
+  <p class="sect">Avance por versión</p>
+  <table>
+    <thead><tr><th>Versión</th><th>IT</th><th>DC</th><th>QA</th><th>MI</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Web</td>
+        <td><span class="pct">41,15 %</span><div class="track"><i style="width:41.15%"></i></div></td>
+        <td><span class="pct">82,31 %<sup class="m">1</sup></span><div class="track"><i style="width:82.31%"></i></div></td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+      </tr>
+      <tr>
+        <td>APP</td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="na">N/A</span></td>
+      </tr>
+      <tr>
+        <td>Offline</td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="pct zero">0,00 %</span><div class="track"><i style="width:0"></i></div></td>
+        <td><span class="na">N/A</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="fnote"><b>1.</b> El 17,69 % restante de Web · DC no son elementos sin revisar: corresponden a las actividades que el migrador configura de forma manual, por lo que quedan pendientes hasta que esa configuración se ejecute.</p>
+</div>
+
+<!-- SEMÁFORO -->
+<div class="card">
+  <p class="sect">Semáforo</p>
+  <div class="sem">
+    <span><i class="dot" style="background:var(--rojo)"></i>0–49 %</span>
+    <span><i class="dot" style="background:var(--amar)"></i>50–74 %</span>
+    <span><i class="dot" style="background:var(--naran)"></i>75–99 %</span>
+    <span><i class="dot" style="background:var(--verde)"></i>100 %</span>
+  </div>
+</div>
+
+<div class="card">
+  <p class="sect">Cronograma · septiembre</p>
+  <div class="gtabs" role="tablist">
+    <button class="gtab on" data-v="Web" role="tab">Web<span class="tct">9</span></button>
+    <button class="gtab" data-v="App" role="tab">App<i class="tdot"></i><span class="tct">7</span></button>
+    <button class="gtab" data-v="Offline" role="tab">Offline<i class="tdot"></i><span class="tct">7</span></button>
+  </div>
+  <div class="gleg"><span><i class="sw fin"></i>Finalizado</span><span><i class="sw proc"></i>En proceso</span><span><i class="sw pend"></i>Pendiente</span><span><i class="sw late"></i>Fuera de fecha</span><span><i class="sw todaysw"></i>Hoy · 18 sep</span></div>
+  <div class="gpanel on" data-v="Web">
+    <p class="gcorte">Corte 24 sep</p>
+    <div class="gscroll"><div class="gantt">
+      <div class="grow ghead"><div class="glabel"></div><div class="gtrack"><span class="gd">3</span><span class="gd">4</span><span class="gd we">5</span><span class="gd we">6</span><span class="gd">7</span><span class="gd">8</span><span class="gd">9</span><span class="gd">10</span><span class="gd">11</span><span class="gd we">12</span><span class="gd we">13</span><span class="gd">14</span><span class="gd">15</span><span class="gd">16</span><span class="gd">17</span><span class="gd td">18</span><span class="gd we">19</span><span class="gd we">20</span><span class="gd">21</span><span class="gd">22</span><span class="gd">23</span><span class="gd">24</span><span class="gd">25</span><span class="gd we">26</span><span class="gd we">27</span><span class="gd">28</span><span class="gd">29</span><span class="gd">30</span></div></div>
+      <div class="grow"><div class="glabel"><b>Entrega de curso migrado</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:8 / span 1">100 %</div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>DC · Aarón Flores</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:9 / span 3">100 %</div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>QA · Polett Jácome</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar proc" style="grid-column:9 / span 5">50 %</div></div></div>
+      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:12 / span 4">100 %</div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 1</b><small>DC · Aarón</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar fin" style="grid-column:16 / span 1">100 %</div></div></div>
+      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:19 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 2</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:20 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Configuraciones manuales</b><small>MI · Martín</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:21 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de config. manuales</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:22 / span 1"></div></div></div>
+    </div></div>
+  </div>
+  <div class="gpanel" data-v="App">
+    <p class="gcorte">Corte 30 sep</p>
+    <div class="gscroll"><div class="gantt">
+      <div class="grow ghead"><div class="glabel"></div><div class="gtrack"><span class="gd">3</span><span class="gd">4</span><span class="gd we">5</span><span class="gd we">6</span><span class="gd">7</span><span class="gd">8</span><span class="gd">9</span><span class="gd">10</span><span class="gd">11</span><span class="gd we">12</span><span class="gd we">13</span><span class="gd">14</span><span class="gd">15</span><span class="gd">16</span><span class="gd">17</span><span class="gd td">18</span><span class="gd we">19</span><span class="gd we">20</span><span class="gd">21</span><span class="gd">22</span><span class="gd">23</span><span class="gd">24</span><span class="gd">25</span><span class="gd we">26</span><span class="gd we">27</span><span class="gd">28</span><span class="gd">29</span><span class="gd">30</span></div></div>
+      <div class="grow"><div class="glabel"><b>Entrega de curso versión App</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar late" style="grid-column:1 / span 14"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>DC · Aarón Flores</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación del curso</b><small>QA · Polett Jácome</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:21 / span 2"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 1</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:23 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:26 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 2</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:27 / span 1"></div></div></div>
+    </div></div>
+  </div>
+  <div class="gpanel" data-v="Offline">
+    <p class="gcorte">Corte 30 sep</p>
+    <div class="gscroll"><div class="gantt">
+      <div class="grow ghead"><div class="glabel"></div><div class="gtrack"><span class="gd">3</span><span class="gd">4</span><span class="gd we">5</span><span class="gd we">6</span><span class="gd">7</span><span class="gd">8</span><span class="gd">9</span><span class="gd">10</span><span class="gd">11</span><span class="gd we">12</span><span class="gd we">13</span><span class="gd">14</span><span class="gd">15</span><span class="gd">16</span><span class="gd">17</span><span class="gd td">18</span><span class="gd we">19</span><span class="gd we">20</span><span class="gd">21</span><span class="gd">22</span><span class="gd">23</span><span class="gd">24</span><span class="gd">25</span><span class="gd we">26</span><span class="gd we">27</span><span class="gd">28</span><span class="gd">29</span><span class="gd">30</span></div></div>
+      <div class="grow"><div class="glabel"><b>Migración</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar late" style="grid-column:1 / span 14"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación</b><small>DC · Aarón Flores</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación</b><small>QA · Polett Jácome</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:15 / span 6"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:21 / span 2"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 1</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:23 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Ajustes</b><small>IT · Julián</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:26 / span 1"></div></div></div>
+      <div class="grow"><div class="glabel"><b>Validación de ajustes ronda 2</b><small>DC/QA · Aarón / Polett</small></div><div class="gtrack"><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell td"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell we"></span><span class="gcell we"></span><span class="gcell"></span><span class="gcell"></span><span class="gcell"></span><div class="gbar pend" style="grid-column:27 / span 1"></div></div></div>
+    </div></div>
+  </div>
+  <p class="gnote">Las barras marcan inicio y fin planificados. La entrega de App y la migración Offline vencieron el 16 de septiembre y siguen en 0 %; todo lo que sigue en esas dos versiones depende de ellas.</p>
+  <script>
+  (function(){
+    var tabs=document.querySelectorAll('.gtab'), panels=document.querySelectorAll('.gpanel');
+    tabs.forEach(function(t){ t.addEventListener('click', function(){
+      tabs.forEach(function(x){x.classList.remove('on')});
+      panels.forEach(function(p){p.classList.toggle('on', p.dataset.v===t.dataset.v)});
+      t.classList.add('on');
+    });});
+  })();
+  </script>
+</div>
+
+<!-- RIESGOS -->
+<div class="card">
+  <p class="sect">Riesgos del proyecto</p>
+  <div class="rgrid">
+    <div>
+      <p class="rtit">Estado de actividades</p>
+      <div class="rrow"><span class="lab">Pendientes</span>
+        <span class="rbar"><i style="width:100%;background:var(--gris)"></i></span><span class="num">16</span></div>
+      <div class="rrow"><span class="lab">En proceso</span>
+        <span class="rbar"><i style="width:6.25%;background:var(--acento)"></i></span><span class="num">1</span></div>
+      <div class="rrow"><span class="lab">Finalizados</span>
+        <span class="rbar"><i style="width:25%;background:var(--verde)"></i></span><span class="num">4</span></div>
+      <div class="rrow"><span class="lab">Fuera de fecha</span>
+        <span class="rbar"><i style="width:12.5%;background:var(--rojo)"></i></span><span class="num">2</span></div>
+    </div>
+    <div>
+      <p class="rtit">Nivel de riesgo</p>
+      <div class="rrow"><span class="lab"><i class="dot" style="background:var(--rojo)"></i>Riesgo alto</span>
+        <span class="rbar"><i style="width:18.75%;background:var(--rojo)"></i></span><span class="num">3</span></div>
+      <div class="rrow"><span class="lab"><i class="dot" style="background:var(--amar)"></i>Riesgo medio</span>
+        <span class="rbar"><i style="width:100%;background:var(--amar)"></i></span><span class="num">16</span></div>
+      <div class="rrow"><span class="lab"><i class="dot" style="background:var(--verde)"></i>Sin riesgo</span>
+        <span class="rbar"><i style="width:25%;background:var(--verde)"></i></span><span class="num">4</span></div>
+    </div>
+  </div>
+</div>
+
+<p class="foot">Mismos bloques y mismos datos del Excel · solo cambia la presentación</p>
+</div>
+
+<!-- SCRIPT DE CONEXIÓN CON GOOGLE SHEETS -->
+<script>
+async function sincronizarDashboardCompleto() {
+    try {
+        const urlApp = 'https://script.google.com/macros/s/AKfycbySZ4UwhxLYpn60nDGb8PElbC_C_RS7vWhZ6TZr8IQzNd_Nr52ELdDPQYBhoeOBJMTXqg/exec';
+        
+        let respuesta = await fetch(urlApp);
+        let datos = await respuesta.json();
+        
+        console.log("Datos sincronizados desde Google Sheets:", datos);
+        
+        // 1. Actualizar Avance General (Círculo - Celda D8)
+        const valElement = document.querySelector('.hero .val');
+        if(valElement && datos.avanceGeneral) {
+            valElement.innerText = datos.avanceGeneral;
+        }
+        
+        // 2. Actualizar Roles (IT, DC, QA, MI - Fila 13)
+        if(datos.roles) {
+            const rolesCards = document.querySelectorAll('.roles .role');
+            if(rolesCards.length >= 4) {
+                if(datos.roles.it) {
+                    rolesCards[0].querySelector('.n').innerText = datos.roles.it;
+                    rolesCards[0].querySelector('.mini i').style.width = datos.roles.it;
+                }
+                if(datos.roles.dc) {
+                    rolesCards[1].querySelector('.n').innerText = datos.roles.dc;
+                    rolesCards[1].querySelector('.mini i').style.width = datos.roles.dc;
+                }
+                if(datos.roles.qa) {
+                    rolesCards[2].querySelector('.n').innerText = datos.roles.qa;
+                    rolesCards[2].querySelector('.mini i').style.width = datos.roles.qa;
+                }
+                if(datos.roles.mi) {
+                    rolesCards[3].querySelector('.n').innerText = datos.roles.mi;
+                    rolesCards[3].querySelector('.mini i').style.width = datos.roles.mi;
+                }
+            }
+        }
+
+        // 3. Actualizar la Tabla de Versiones (Filas 19, 20 y 21)
+        if(datos.versiones && Array.isArray(datos.versiones)) {
+            const filasTabla = document.querySelectorAll('table tbody tr');
+            
+            datos.versiones.forEach((filaDatos, index) => {
+                if(filasTabla[index]) {
+                    const celdas = filasTabla[index].querySelectorAll('td');
+                    // Empezamos desde i = 1 porque la columna 0 es el nombre de la versión
+                    for(let i = 1; i < celdas.length; i++) {
+                        if(filaDatos[i] !== undefined && celdas[i].querySelector('.pct')) {
+                            celdas[i].querySelector('.pct').innerText = filaDatos[i];
+                            
+                            // Ajustar la barra de progreso interna si existe
+                            const barraProgreso = celdas[i].querySelector('.track i');
+                            if(barraProgreso) {
+                                barraProgreso.style.width = filaDatos[i];
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+    } catch (error) {
+        console.error("Error al sincronizar el dashboard:", error);
+    }
+}
+
+// Ejecutar automáticamente al cargar la página
+document.addEventListener('DOMContentLoaded', sincronizarDashboardCompleto);
+</script>
+
+</body>
+</html>
