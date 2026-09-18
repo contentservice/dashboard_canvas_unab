@@ -25,7 +25,7 @@ h1 em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:
 .sect{font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
   color:var(--slate);margin:0 0 18px}
 
-/* Ocultar elementos dinámicos al cargar para evitar parpadeos */
+/* Ocultar elementos mientras cargan para evitar parpadeos */
 .cargando-datos { opacity: 0; transition: opacity 0.3s ease-in; }
 .datos-listos { opacity: 1; }
 
@@ -79,6 +79,7 @@ td:first-child{text-align:left;font-weight:700;font-size:13px}
 .rbar i{display:block;height:100%;border-radius:999px}
 .rtit{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
   color:var(--slate);margin:0 0 6px}
+
 /* Resumen */
 .resumen{background:var(--card);border-radius:16px;padding:22px 26px;
   box-shadow:0 1px 3px rgba(26,29,46,.06);margin-bottom:14px;border-left:none}
@@ -86,61 +87,7 @@ td:first-child{text-align:left;font-weight:700;font-size:13px}
 .resumen p:last-child{margin-bottom:0}
 .resumen strong{font-weight:700}
 .alerta{color:var(--rojo);font-weight:700}
-
-/* Gantt */
-.gscroll{overflow-x:auto;padding-bottom:6px}
-.gantt{min-width:760px}
-.gleg{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px;font-size:12px;color:var(--slate)}
-.gleg span{display:inline-flex;align-items:center;gap:7px}
-.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
-.sw.fin{background:var(--verde)} .sw.proc{background:var(--acento)}
-.sw.pend{background:var(--marca);opacity:.32} .sw.late{background:var(--rojo)}
-.sw.todaysw{background:transparent;border-left:2px solid var(--marca);border-radius:0;width:2px}
-.grow{display:grid;grid-template-columns:210px 1fr;align-items:center;gap:14px;padding:3px 0}
-.glabel b{display:block;font-size:12.5px;font-weight:700;line-height:1.3}
-.glabel small{display:block;font-size:11px;color:var(--slate);margin-top:2px}
-.gtrack{display:grid;grid-template-columns:repeat(28,1fr);position:relative;height:24px}
-.gcell{border-right:1px solid var(--borde)}
-.gcell.we{background:var(--tint)}
-.gcell.td{box-shadow:inset 2px 0 0 var(--marca)}
-.ghead .gtrack{height:20px}
-.gd{font-size:10px;color:var(--slate);text-align:center;line-height:20px}
-.gd.we{background:var(--tint);border-radius:4px}
-.gd.td{color:var(--marca);font-weight:700}
-.gbar{grid-row:1;height:17px;align-self:center;border-radius:999px;font-size:10px;
-  font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;
-  margin:0 1px;z-index:1}
-.gbar.fin{background:var(--verde)} .gbar.proc{background:var(--acento);color:#5A4300}
-.gbar.pend{background:var(--marca);opacity:.32} .gbar.late{background:var(--rojo)}
-.gsep{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  color:var(--slate);margin:16px 0 6px;padding-top:12px;border-top:1px solid var(--borde)}
-.grow.ghead+.gsep{border-top:0;margin-top:8px;padding-top:0}
-
-.gtabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.gtab{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borde);
-  background:var(--card);color:var(--slate);border-radius:999px;padding:9px 16px;
-  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
-.gtab:hover{background:var(--tint)}
-.gtab.on{background:var(--marca);border-color:var(--marca);color:#fff}
-.tct{font-size:11px;font-weight:700;background:var(--tint);color:var(--slate);
-  border-radius:999px;padding:2px 7px}
-.gtab.on .tct{background:rgba(255,255,255,.22);color:#fff}
-.tdot{width:7px;height:7px;border-radius:50%;background:var(--rojo);display:inline-block}
-.gpanel{display:none}
-.gpanel.on{display:block}
-.gcorte{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
-  color:var(--slate);margin:0 0 12px}
-.gnote{font-size:12px;color:var(--slate);margin:18px 0 0;line-height:1.55}
-.fnote{font-size:12px;color:var(--slate);line-height:1.6;margin:16px 0 0;
-  background:var(--tint);border-radius:10px;padding:12px 14px}
-.fnote b{color:var(--texto)}
-sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
 .foot{font-size:12px;color:var(--slate);text-align:center;margin-top:20px}
-@media(max-width:700px){
-  .roles{grid-template-columns:repeat(2,1fr)}
-  .rgrid{grid-template-columns:1fr;gap:18px}
-  table{font-size:13px} th,td{padding-left:4px;padding-right:4px}
-}
 </style>
 </head>
 <body>
@@ -148,7 +95,7 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
 
 <header>
   <h1>Dashboard de <em>seguimiento</em></h1>
-  <div class="sub">Migración a Canvas · Universidad Andrés Bello · 18 de septiembre de 2026</div>
+  <div class="sub">Migración a Canvas · Universidad Andrés Bello · Septiembre de 2026</div>
 </header>
 
 <!-- AVANCE GENERAL -->
@@ -161,11 +108,11 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
         <circle cx="66" cy="66" r="56" fill="none" stroke="#E24B4A" stroke-width="13"
                 stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="315.7"/>
       </svg>
-      <div class="val cargando-datos" id="txt-avance">...</div>
+      <div class="val cargando-datos">...</div>
     </div>
     <div class="herometa">
       <span class="estado"><i class="dot" style="background:#E24B4A"></i>Zona roja · 0–49 %</span>
-      <p>Promedio de las cuatro compuertas. DC avanza sobre la versión Web; QA y MI todavía no arrancaron.</p>
+      <p>Promedio de las cuatro compuertas según el registro en tiempo real de Google Sheets.</p>
     </div>
   </div>
 </div>
@@ -173,23 +120,17 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
 <!-- RESUMEN -->
 <div class="resumen">
   <p class="sect">Resumen del día</p>
-  <p>El proyecto avanza <strong>solo en la versión Web</strong>. La validación de contenidos llega al 82,31 % y es lo único que se movió; App y Offline siguen en cero en las cuatro compuertas. El 10,29 % general refleja ese desbalance, no una falta de trabajo.</p>
-  <p><span class="alerta">Dos actividades están fuera de fecha</span> desde el 16 de septiembre: la entrega del curso versión App y la migración Offline, ambas a cargo de Julián y sin avance registrado. Son el bloqueo que impide arrancar las validaciones de esas dos versiones.</p>
-  <p>El corte de Web es el <strong>24 de septiembre</strong> y QA todavía no registra ningún elemento validado. De las 23 actividades del cronograma, 16 siguen pendientes y 3 están en riesgo alto.</p>
+  <p>El proyecto se actualiza dinámicamente con base en la información centralizada en tu hoja de cálculo.</p>
 </div>
 
 <!-- POR ROL -->
 <div class="card">
   <p class="sect">Avance por rol</p>
   <div class="roles">
-    <div class="role"><div class="n cargando-datos" id="rol-it">...</div><div class="l">IT</div>
-      <div class="mini"><i style="width:0%"></i></div></div>
-    <div class="role"><div class="n cargando-datos" id="rol-dc">...</div><div class="l">DC</div>
-      <div class="mini"><i style="width:0%"></i></div></div>
-    <div class="role"><div class="n cargando-datos" id="rol-qa">...</div><div class="l">QA</div>
-      <div class="mini"><i style="width:0%"></i></div></div>
-    <div class="role"><div class="n cargando-datos" id="rol-mi">...</div><div class="l">MI</div>
-      <div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos">...</div><div class="l">IT</div><div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos">...</div><div class="l">DC</div><div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos">...</div><div class="l">QA</div><div class="mini"><i style="width:0%"></i></div></div>
+    <div class="role"><div class="n cargando-datos">...</div><div class="l">MI</div><div class="mini"><i style="width:0%"></i></div></div>
   </div>
 </div>
 
@@ -222,7 +163,6 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
       </tr>
     </tbody>
   </table>
-  <p class="fnote"><b>1.</b> El porcentaje restante no revisado corresponde a configuraciones manuales pendientes.</p>
 </div>
 
 <!-- SEMÁFORO -->
@@ -236,46 +176,16 @@ sup.m{color:var(--marca);font-weight:700;font-size:10px;margin-left:2px}
   </div>
 </div>
 
-<!-- RIESGOS -->
-<div class="card">
-  <p class="sect">Riesgos del proyecto</p>
-  <div class="rgrid">
-    <div>
-      <p class="rtit">Estado de actividades</p>
-      <div class="rrow"><span class="lab">Pendientes</span>
-        <span class="rbar"><i style="width:100%;background:var(--gris)"></i></span><span class="num">16</span></div>
-      <div class="rrow"><span class="lab">En proceso</span>
-        <span class="rbar"><i style="width:6.25%;background:var(--acento)"></i></span><span class="num">1</span></div>
-      <div class="rrow"><span class="lab">Finalizados</span>
-        <span class="rbar"><i style="width:25%;background:var(--verde)"></i></span><span class="num">4</span></div>
-      <div class="rrow"><span class="lab">Fuera de fecha</span>
-        <span class="rbar"><i style="width:12.5%;background:var(--rojo)"></i></span><span class="num">2</span></div>
-    </div>
-    <div>
-      <p class="rtit">Nivel de riesgo</p>
-      <div class="rrow"><span class="lab"><i class="dot" style="background:var(--rojo)"></i>Riesgo alto</span>
-        <span class="rbar"><i style="width:18.75%;background:var(--rojo)"></i></span><span class="num">3</span></div>
-      <div class="rrow"><span class="lab"><i class="dot" style="background:var(--amar)"></i>Riesgo medio</span>
-        <span class="rbar"><i style="width:100%;background:var(--amar)"></i></span><span class="num">16</span></div>
-      <div class="rrow"><span class="lab"><i class="dot" style="background:var(--verde)"></i>Sin riesgo</span>
-        <span class="rbar"><i style="width:25%;background:var(--verde)"></i></span><span class="num">4</span></div>
-    </div>
-  </div>
+<p class="foot">Dashboard conectado en tiempo real con Google Sheets</p>
 </div>
 
-<p class="foot">Mismos bloques y mismos datos del Excel · solo cambia la presentación</p>
-</div>
-
-<!-- SCRIPT DE CONEXIÓN CON GOOGLE SHEETS -->
+<!-- SCRIPT DE CONEXIÓN -->
 <script>
-async function sincronizarDashboardCompleto() {
+async function sincronizarDashboard() {
     try {
         const urlApp = 'https://script.google.com/macros/s/AKfycbySZ4UwhxLYpn60nDGb8PElbC_C_RS7vWhZ6TZr8IQzNd_Nr52ELdDPQYBhoeOBJMTXqg/exec';
-        
         let respuesta = await fetch(urlApp);
         let datos = await respuesta.json();
-        
-        console.log("Datos sincronizados:", datos);
         
         // 1. Avance General
         const valElement = document.querySelector('.hero .val');
@@ -288,20 +198,18 @@ async function sincronizarDashboardCompleto() {
         // 2. Roles
         if(datos.roles) {
             const rolesCards = document.querySelectorAll('.roles .role');
-            if(rolesCards.length >= 4) {
-                const mapRoles = [datos.roles.it, datos.roles.dc, datos.roles.qa, datos.roles.mi];
-                rolesCards.forEach((rcard, idx) => {
-                    const valNum = mapRoles[idx];
-                    const numDiv = rcard.querySelector('.n');
-                    const miniBar = rcard.querySelector('.mini i');
-                    if(valNum) {
-                        numDiv.innerText = valNum;
-                        miniBar.style.width = valNum;
-                        numDiv.classList.remove('cargando-datos');
-                        numDiv.classList.add('datos-listos');
-                    }
-                });
-            }
+            const mapRoles = [datos.roles.it, datos.roles.dc, datos.roles.qa, datos.roles.mi];
+            rolesCards.forEach((rcard, idx) => {
+                const valNum = mapRoles[idx];
+                const numDiv = rcard.querySelector('.n');
+                const miniBar = rcard.querySelector('.mini i');
+                if(valNum) {
+                    numDiv.innerText = valNum;
+                    miniBar.style.width = valNum;
+                    numDiv.classList.remove('cargando-datos');
+                    numDiv.classList.add('datos-listos');
+                }
+            });
         }
 
         // 3. Versiones
@@ -326,13 +234,12 @@ async function sincronizarDashboardCompleto() {
                 }
             });
         }
-
     } catch (error) {
         console.error("Error al sincronizar:", error);
     }
 }
 
-document.addEventListener('DOMContentLoaded', sincronizarDashboardCompleto);
+document.addEventListener('DOMContentLoaded', sincronizarDashboard);
 </script>
 
 </body>
