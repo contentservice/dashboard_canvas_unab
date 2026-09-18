@@ -179,11 +179,11 @@ td:first-child{text-align:left;font-weight:700;font-size:13px}
 <p class="foot">Dashboard conectado en tiempo real con Google Sheets</p>
 </div>
 
-<!-- SCRIPT DE CONEXIÓN -->
+<!-- SCRIPT DE CONEXIÓN CON LA NUEVA URL -->
 <script>
 async function sincronizarDashboard() {
     try {
-        const urlApp = 'https://script.google.com/macros/s/AKfycbySZ4UwhxLYpn60nDGb8PElbC_C_RS7vWhZ6TZr8IQzNd_Nr52ELdDPQYBhoeOBJMTXqg/exec';
+        const urlApp = 'https://script.google.com/macros/s/AKfycbw5ORKJcxkonQ8QENGiWxbjYwKv2aXAiKjGXzUGiZ9UCsMFgvJwkOyPdfGKcf9J2J2o/exec';
         let respuesta = await fetch(urlApp);
         let datos = await respuesta.json();
         
@@ -205,7 +205,11 @@ async function sincronizarDashboard() {
                 const miniBar = rcard.querySelector('.mini i');
                 if(valNum) {
                     numDiv.innerText = valNum;
-                    miniBar.style.width = valNum;
+                    // Limpiamos el texto del porcentaje para ajustar la barra de progreso proporcionalmente
+                    const numClean = parseFloat(valNum.replace('%', '').replace(',', '.').trim());
+                    if(!isNaN(numClean)) {
+                        miniBar.style.width = Math.min(Math.max(numClean, 0), 100) + '%';
+                    }
                     numDiv.classList.remove('cargando-datos');
                     numDiv.classList.add('datos-listos');
                 }
@@ -227,7 +231,10 @@ async function sincronizarDashboard() {
                             
                             const barraProgreso = celdas[i].querySelector('.track i');
                             if(barraProgreso) {
-                                barraProgreso.style.width = filaDatos[i];
+                                const numClean = parseFloat(filaDatos[i].replace('%', '').replace(',', '.').trim());
+                                if(!isNaN(numClean)) {
+                                    barraProgreso.style.width = Math.min(Math.max(numClean, 0), 100) + '%';
+                                }
                             }
                         }
                     }
